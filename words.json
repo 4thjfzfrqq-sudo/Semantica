@@ -1,0 +1,31 @@
+import words from "../../../data/words.json";
+
+export async function POST(request) {
+  const { word, secretWord } = await request.json();
+  if (!word || !secretWord) {
+    return Response.json({ error: "Paramètres manquants" }, { status: 400 });
+  }
+
+  const w = word.toLowerCase().trim();
+  const secret = secretWord.toLowerCase().trim();
+
+  if (w === secret) {
+    return Response.json({ score: 1000, rank: 1, known: true });
+  }
+
+  const associations = words[secret];
+  if (!associations) {
+    return Response.json({ error: "Mot secret inconnu" }, { status: 400 });
+  }
+
+  const score = associations[w];
+  if (score === undefined) {
+    return Response.json({ score: null, known: false });
+  }
+
+  // Calculate rank (position in sorted list)
+  const sortedScores = Object.values(associations).sort((a, b) => b - a);
+  const rank = sortedScores.findIndex(s => s <= score) + 1;
+
+  return Response.json({ score, rank, known: true });
+}
