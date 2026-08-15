@@ -132,7 +132,7 @@ export default function DemoFinder() {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="relative overflow-hidden rounded-[2rem] border border-teal/25 bg-gradient-to-br from-surface to-ink-soft p-6 sm:p-10">
-                  <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-teal/15 blur-[100px]" />
+                  <div className="pointer-events-none absolute -top-20 -right-20 h-48 w-48 rounded-full bg-teal/15 blur-[60px]" />
                   <span className="inline-flex items-center gap-2 rounded-full bg-teal/15 px-4 py-1.5 text-xs font-bold tracking-wide text-teal-soft uppercase">
                     🥇 Votre jeu ce soir
                   </span>

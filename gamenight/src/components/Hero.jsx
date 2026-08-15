@@ -14,9 +14,8 @@ export default function Hero({ onFindGame }) {
       {/* decorative background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-ink" />
-        <div className="absolute -top-32 -left-32 h-96 w-96 animate-blob rounded-full bg-coral/25 blur-[110px]" />
-        <div className="absolute top-1/3 -right-24 h-[28rem] w-[28rem] animate-blob rounded-full bg-teal/15 blur-[130px] [animation-delay:3s]" />
-        <div className="absolute inset-0 grain opacity-40" />
+        <div className="absolute -top-32 -left-32 h-72 w-72 animate-blob rounded-full bg-coral/25 blur-[70px]" />
+        <div className="absolute top-1/3 -right-24 h-80 w-80 animate-blob rounded-full bg-teal/15 blur-[70px] [animation-delay:3s]" />
       </div>
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-5 sm:px-8 lg:grid-cols-2 lg:gap-12">

@@ -76,7 +76,7 @@ export default function Friends() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="relative overflow-hidden rounded-3xl border border-teal/25 bg-gradient-to-br from-surface to-ink-soft p-6 sm:p-8 lg:col-span-3"
           >
-            <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-teal/15 blur-[100px]" />
+            <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-teal/15 blur-[60px]" />
             <h3 className="relative font-display text-xl font-semibold text-cream">
               Les jeux qui plaisent à tout le monde
             </h3>

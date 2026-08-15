@@ -8,7 +8,7 @@ export default function FinalCTA() {
   return (
     <section className="relative overflow-hidden py-28 sm:py-40">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 animate-blob rounded-full bg-coral/20 blur-[140px]" />
+        <div className="absolute top-1/2 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 animate-blob rounded-full bg-coral/20 blur-[80px]" />
       </div>
 
       <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
