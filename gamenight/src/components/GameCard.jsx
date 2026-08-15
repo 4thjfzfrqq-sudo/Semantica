@@ -10,20 +10,48 @@ function formatDuration(duration) {
   return min === max ? `${min} min` : `${min}–${max} min`;
 }
 
-export default function GameCard({ game, badge, className = "" }) {
+export default function GameCard({
+  game,
+  badge,
+  className = "",
+  selectable = false,
+  selected = false,
+  onToggle,
+}) {
+  const Wrapper = selectable ? "button" : "div";
+
   return (
-    <div
-      className={`group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-surface p-3 shadow-glow transition-all duration-300 hover:-translate-y-1.5 hover:border-white/15 ${className}`}
+    <Wrapper
+      onClick={selectable ? () => onToggle?.(game.id) : undefined}
+      aria-pressed={selectable ? selected : undefined}
+      className={`group relative flex flex-col overflow-hidden rounded-3xl border p-3 text-left shadow-glow transition-all duration-300 hover:-translate-y-1.5 ${
+        selectable
+          ? selected
+            ? "border-teal/40 bg-surface hover:border-teal/60"
+            : "border-line bg-surface/50 opacity-60 hover:border-white/20 hover:opacity-100"
+          : "border-line bg-surface hover:border-white/15"
+      } ${className}`}
     >
       <div className="relative">
         <CoverArt
           game={game}
           size="lg"
-          className="aspect-square w-full transition-transform duration-500 group-hover:scale-[1.04]"
+          className={`aspect-square w-full transition-transform duration-500 group-hover:scale-[1.04] ${
+            selectable && !selected ? "grayscale" : ""
+          }`}
         />
         {badge && (
           <span className="absolute top-2.5 right-2.5 rounded-full bg-ink/80 px-2.5 py-1 text-xs font-semibold text-cream backdrop-blur">
             {badge}
+          </span>
+        )}
+        {selectable && (
+          <span
+            className={`absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full text-sm font-bold transition-colors ${
+              selected ? "bg-teal text-ink" : "bg-ink/70 text-cream-dim"
+            }`}
+          >
+            {selected ? "✓" : "+"}
           </span>
         )}
       </div>
@@ -35,6 +63,6 @@ export default function GameCard({ game, badge, className = "" }) {
           <span>⏱️ {formatDuration(game.duration)}</span>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }

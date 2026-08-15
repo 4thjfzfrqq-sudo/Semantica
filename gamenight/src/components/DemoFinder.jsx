@@ -18,26 +18,29 @@ function Pill({ active, onClick, children }) {
   );
 }
 
-export default function DemoFinder() {
+export default function DemoFinder({ libraryIds = [] }) {
   const [players, setPlayers] = useState(null);
   const [duration, setDuration] = useState(null);
   const [moods, setMoods] = useState([]);
   const [result, setResult] = useState(null);
   const [pulse, setPulse] = useState(0);
+  const [filterToLibrary, setFilterToLibrary] = useState(true);
 
   const toggleMood = (id) =>
     setMoods((prev) => (prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]));
 
   const canSearch = players !== null && duration !== null;
+  const hasLibrary = libraryIds.length > 0;
+  const applyFilter = filterToLibrary && hasLibrary;
 
   const handleSearch = () => {
     if (!canSearch) return;
-    const filters = { players, duration, moods };
+    const filters = { players, duration, moods, libraryIds: applyFilter ? libraryIds : undefined };
     const { top, alternatives } = recommend(filters);
     setResult({
       top,
       alternatives,
-      explanation: explanationFor(top.game, filters),
+      explanation: top ? explanationFor(top.game, filters) : null,
     });
     setPulse((p) => p + 1);
     requestAnimationFrame(() => {
@@ -105,6 +108,34 @@ export default function DemoFinder() {
             </div>
           </div>
 
+          <div className="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-display text-lg font-semibold text-cream">
+                Filtrer sur ma ludothèque
+              </p>
+              <p className="mt-0.5 text-sm text-cream-faint">
+                {hasLibrary
+                  ? `Ne proposer que les ${libraryIds.length} jeu${libraryIds.length > 1 ? "x" : ""} que vous possédez déjà.`
+                  : "Ajoutez des jeux à votre ludothèque pour activer ce filtre."}
+              </p>
+            </div>
+            <button
+              role="switch"
+              aria-checked={applyFilter}
+              disabled={!hasLibrary}
+              onClick={() => setFilterToLibrary((v) => !v)}
+              className={`relative h-8 w-14 shrink-0 rounded-full transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-40 ${
+                applyFilter ? "bg-teal" : "bg-ink-soft"
+              }`}
+            >
+              <motion.span
+                className="absolute top-1 h-6 w-6 rounded-full bg-cream shadow"
+                animate={{ left: applyFilter ? "1.75rem" : "0.25rem" }}
+                transition={{ type: "spring", stiffness: 500, damping: 32 }}
+              />
+            </button>
+          </div>
+
           <div className="flex flex-col items-center gap-3 pt-2">
             <button
               onClick={handleSearch}
@@ -131,6 +162,28 @@ export default function DemoFinder() {
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
+                {!result.top ? (
+                  <div className="rounded-[2rem] border border-line bg-surface/60 p-10 text-center">
+                    <p className="text-4xl">🤷</p>
+                    <h3 className="mt-4 font-display text-2xl font-semibold text-cream">
+                      Aucun jeu dans votre ludothèque
+                    </h3>
+                    <p className="mx-auto mt-2 max-w-sm text-cream-dim">
+                      Ajoutez des jeux plus bas dans « Votre ludothèque », ou désactivez le
+                      filtre pour choisir parmi tout le catalogue.
+                    </p>
+                    <a
+                      href="#ludotheque"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.querySelector("#ludotheque")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-cream px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
+                    >
+                      Aller à ma ludothèque
+                    </a>
+                  </div>
+                ) : (
                 <div className="relative overflow-hidden rounded-[2rem] border border-teal/25 bg-gradient-to-br from-surface to-ink-soft p-6 sm:p-10">
                   <div className="pointer-events-none absolute -top-20 -right-20 h-48 w-48 rounded-full bg-teal/15 blur-[60px]" />
                   <span className="inline-flex items-center gap-2 rounded-full bg-teal/15 px-4 py-1.5 text-xs font-bold tracking-wide text-teal-soft uppercase">
@@ -161,6 +214,7 @@ export default function DemoFinder() {
                     </div>
                   </div>
 
+                  {result.alternatives.length > 0 && (
                   <div className="relative mt-8 border-t border-line pt-6">
                     <p className="text-sm font-semibold text-cream-faint uppercase">Aussi pour vous</p>
                     <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -181,6 +235,7 @@ export default function DemoFinder() {
                       ))}
                     </div>
                   </div>
+                  )}
 
                   <button
                     onClick={reset}
@@ -189,6 +244,7 @@ export default function DemoFinder() {
                     ↻ Refaire une recherche
                   </button>
                 </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

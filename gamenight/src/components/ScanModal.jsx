@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { gameById } from "../data/games";
 
-const DETECTED = ["Azul", "Codenames", "Cascadia", "Heat", "Splendor", "The Crew"];
+const DETECTED_IDS = [
+  "azul",
+  "codenames",
+  "cascadia",
+  "heat",
+  "splendor",
+  "the-crew",
+  "wingspan",
+  "skull",
+];
 
-export default function ScanModal({ open, onClose }) {
+export default function ScanModal({ open, onClose, onScanned }) {
   const [step, setStep] = useState("intro"); // intro | scanning | done
 
   useEffect(() => {
@@ -21,9 +31,12 @@ export default function ScanModal({ open, onClose }) {
 
   useEffect(() => {
     if (step !== "scanning") return;
-    const t = setTimeout(() => setStep("done"), 1800);
+    const t = setTimeout(() => {
+      setStep("done");
+      onScanned?.(DETECTED_IDS);
+    }, 1800);
     return () => clearTimeout(t);
-  }, [step]);
+  }, [step, onScanned]);
 
   return (
     <AnimatePresence>
@@ -114,18 +127,18 @@ export default function ScanModal({ open, onClose }) {
                   ✅
                 </div>
                 <h3 className="mt-5 font-display text-2xl font-semibold text-cream">
-                  6 jeux détectés
+                  {DETECTED_IDS.length} jeux détectés
                 </h3>
                 <p className="mt-2 text-sm text-cream-dim">
                   Ils rejoignent votre ludothèque et affinent déjà vos recommandations.
                 </p>
                 <div className="mt-5 flex flex-wrap justify-center gap-2">
-                  {DETECTED.map((name) => (
+                  {DETECTED_IDS.map((id) => (
                     <span
-                      key={name}
+                      key={id}
                       className="rounded-full border border-line bg-ink-soft px-3 py-1.5 text-xs font-medium text-cream-dim"
                     >
-                      {name}
+                      {gameById(id).name}
                     </span>
                   ))}
                 </div>

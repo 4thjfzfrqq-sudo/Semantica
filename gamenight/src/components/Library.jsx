@@ -1,23 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { gameById } from "../data/games";
+import { GAMES } from "../data/games";
 import GameCard from "./GameCard";
 import ScanModal from "./ScanModal";
 
-const LIBRARY_IDS = [
-  "azul",
-  "codenames",
-  "cascadia",
-  "7-wonders-duel",
-  "sky-team",
-  "splendor",
-  "heat",
-  "the-crew",
-];
-
-export default function Library() {
+export default function Library({ libraryIds, onToggleGame, onAddGames }) {
   const [scanOpen, setScanOpen] = useState(false);
-  const games = LIBRARY_IDS.map(gameById);
 
   return (
     <section id="ludotheque" className="relative py-28 sm:py-36">
@@ -36,8 +24,9 @@ export default function Library() {
               Votre ludothèque
             </h2>
             <p className="mt-3 max-w-md text-cream-dim">
-              8 jeux, chacun avec son propre profil de goût pour affiner vos
-              recommandations.
+              <strong className="text-cream">{libraryIds.length} jeu{libraryIds.length > 1 ? "x" : ""}</strong>{" "}
+              dans votre ludothèque — ce sont eux que « On joue à quoi ? » utilise pour
+              vous recommander une partie. Cliquez sur un jeu pour l'ajouter ou le retirer.
             </p>
           </motion.div>
 
@@ -54,21 +43,26 @@ export default function Library() {
         </div>
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
-          {games.map((game, i) => (
+          {GAMES.map((game, i) => (
             <motion.div
               key={game.id}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.45, delay: (i % 4) * 0.06 }}
+              transition={{ duration: 0.45, delay: (i % 4) * 0.05 }}
             >
-              <GameCard game={game} />
+              <GameCard
+                game={game}
+                selectable
+                selected={libraryIds.includes(game.id)}
+                onToggle={onToggleGame}
+              />
             </motion.div>
           ))}
         </div>
       </div>
 
-      <ScanModal open={scanOpen} onClose={() => setScanOpen(false)} />
+      <ScanModal open={scanOpen} onClose={() => setScanOpen(false)} onScanned={onAddGames} />
     </section>
   );
 }

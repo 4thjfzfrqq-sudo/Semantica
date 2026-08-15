@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
@@ -7,10 +8,23 @@ import Friends from "./components/Friends";
 import Library from "./components/Library";
 import FinalCTA from "./components/FinalCTA";
 import Footer from "./components/Footer";
+import { DEFAULT_LIBRARY_IDS } from "./data/games";
 
 export default function App() {
+  const [libraryIds, setLibraryIds] = useState(DEFAULT_LIBRARY_IDS);
+
   const scrollToDemo = () => {
     document.querySelector("#decouvrir")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const toggleLibraryGame = (id) => {
+    setLibraryIds((prev) =>
+      prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id],
+    );
+  };
+
+  const addLibraryGames = (ids) => {
+    setLibraryIds((prev) => Array.from(new Set([...prev, ...ids])));
   };
 
   return (
@@ -19,10 +33,14 @@ export default function App() {
       <main>
         <Hero onFindGame={scrollToDemo} />
         <HowItWorks />
-        <DemoFinder />
+        <DemoFinder libraryIds={libraryIds} />
         <Profile />
         <Friends />
-        <Library />
+        <Library
+          libraryIds={libraryIds}
+          onToggleGame={toggleLibraryGame}
+          onAddGames={addLibraryGames}
+        />
         <FinalCTA />
       </main>
       <Footer />

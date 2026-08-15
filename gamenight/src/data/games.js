@@ -216,6 +216,18 @@ export function gameById(id) {
   return GAMES.find((g) => g.id === id);
 }
 
+// composition initiale de "votre ludothèque" — modifiable dans la section dédiée
+export const DEFAULT_LIBRARY_IDS = [
+  "azul",
+  "codenames",
+  "cascadia",
+  "7-wonders-duel",
+  "sky-team",
+  "splendor",
+  "heat",
+  "the-crew",
+];
+
 // petit hash déterministe pour varier légèrement les scores sans être aléatoire
 function seedFrom(str) {
   let h = 0;
@@ -254,17 +266,21 @@ function moodScore(game, moods) {
   return Math.round((hits / moods.length) * 30);
 }
 
-export function recommend({ players, duration, moods }) {
-  const scored = GAMES.map((game) => {
-    const base =
-      playersScore(game, players) + durationScore(game, duration) + moodScore(game, moods);
-    const varied = base + seedFrom(game.id);
-    const pct = Math.max(58, Math.min(99, varied));
-    return { game, score: pct };
-  }).sort((a, b) => b.score - a.score);
+export function recommend({ players, duration, moods, libraryIds }) {
+  const pool = libraryIds ? GAMES.filter((g) => libraryIds.includes(g.id)) : GAMES;
+
+  const scored = pool
+    .map((game) => {
+      const base =
+        playersScore(game, players) + durationScore(game, duration) + moodScore(game, moods);
+      const varied = base + seedFrom(game.id);
+      const pct = Math.max(58, Math.min(99, varied));
+      return { game, score: pct };
+    })
+    .sort((a, b) => b.score - a.score);
 
   return {
-    top: scored[0],
+    top: scored[0] ?? null,
     alternatives: scored.slice(1, 3),
   };
 }
