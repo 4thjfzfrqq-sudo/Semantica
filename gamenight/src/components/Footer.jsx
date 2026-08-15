@@ -8,7 +8,8 @@ export default function Footer() {
         </div>
         <p className="text-center text-xs text-cream-faint sm:text-right">
           Prototype de démonstration — noms de jeux cités à titre d'exemple, sans
-          affiliation. Aucune donnée n'est collectée ni sauvegardée.
+          affiliation. Les liens « Acheter » renvoient vers Philibert.com à titre
+          indicatif. Aucune donnée n'est collectée ni sauvegardée.
         </p>
       </div>
     </footer>

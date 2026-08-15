@@ -54,6 +54,7 @@ export default function Library({ libraryIds, onToggleGame, onAddGames }) {
               <GameCard
                 game={game}
                 selectable
+                showBuyLink
                 selected={libraryIds.includes(game.id)}
                 onToggle={onToggleGame}
               />

@@ -17,14 +17,29 @@ export default function GameCard({
   selectable = false,
   selected = false,
   onToggle,
+  showBuyLink = false,
 }) {
-  const Wrapper = selectable ? "button" : "div";
+  const toggle = () => onToggle?.(game.id);
 
   return (
-    <Wrapper
-      onClick={selectable ? () => onToggle?.(game.id) : undefined}
+    <div
+      role={selectable ? "button" : undefined}
+      tabIndex={selectable ? 0 : undefined}
+      onClick={selectable ? toggle : undefined}
+      onKeyDown={
+        selectable
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggle();
+              }
+            }
+          : undefined
+      }
       aria-pressed={selectable ? selected : undefined}
       className={`group relative flex flex-col overflow-hidden rounded-3xl border p-3 text-left shadow-glow transition-all duration-300 hover:-translate-y-1.5 ${
+        selectable ? "cursor-pointer" : ""
+      } ${
         selectable
           ? selected
             ? "border-teal/40 bg-surface hover:border-teal/60"
@@ -62,7 +77,18 @@ export default function GameCard({
           <span>👥 {formatPlayers(game.players)}</span>
           <span>⏱️ {formatDuration(game.duration)}</span>
         </div>
+        {showBuyLink && !selected && game.buyUrl && (
+          <a
+            href={game.buyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-coral-soft underline decoration-coral-soft/40 underline-offset-4 transition-colors hover:text-gold"
+          >
+            🛒 Acheter le jeu ↗
+          </a>
+        )}
       </div>
-    </Wrapper>
+    </div>
   );
 }

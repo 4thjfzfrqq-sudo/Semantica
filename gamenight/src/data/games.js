@@ -1,4 +1,5 @@
 // Données fictives — prototype uniquement, aucune connexion à une vraie base de jeux.
+// Seul `buyUrl` pointe vers de vraies fiches produit (philibertnet.com) pour les liens d'achat.
 
 export const MOODS = [
   { id: "reflexion", label: "Réflexion", emoji: "🧠" },
@@ -40,6 +41,7 @@ export const GAMES = [
     complexity: 2,
     description:
       "Un puzzle nature apaisant : associez tuiles et animaux pour composer le plus bel écosystème.",
+    buyUrl: "https://www.philibertnet.com/fr/lucky-duck-games/101531-cascadia-787790591092.html",
   },
   {
     id: "the-crew",
@@ -53,6 +55,7 @@ export const GAMES = [
     complexity: 2,
     description:
       "Communiquez sans parler pour réussir ensemble des missions de plus en plus corsées.",
+    buyUrl: "https://www.philibertnet.com/fr/iello/86975-the-crew-3760175517211.html",
   },
   {
     id: "7-wonders",
@@ -66,6 +69,8 @@ export const GAMES = [
     complexity: 3,
     description:
       "Draft de cartes rapide où chaque choix construit votre empire face aux autres joueurs.",
+    buyUrl:
+      "https://www.philibertnet.com/fr/repos-productions/89182-7-wonders-nouvelle-edition-5425016923764.html",
   },
   {
     id: "codenames",
@@ -79,6 +84,7 @@ export const GAMES = [
     complexity: 1,
     description:
       "Deux équipes s'affrontent à coups d'indices en un seul mot. Facile à expliquer, dur à lâcher.",
+    buyUrl: "https://www.philibertnet.com/fr/iello/41406-codenames-vf-3701551704863.html",
   },
   {
     id: "heat",
@@ -92,6 +98,7 @@ export const GAMES = [
     complexity: 2,
     description:
       "Gérez votre moteur, dépassez au bon moment, sentez l'adrénaline du dernier virage.",
+    buyUrl: "https://www.philibertnet.com/fr/days-of-wonder/112362-heat-824968091210.html",
   },
   {
     id: "azul",
@@ -105,6 +112,7 @@ export const GAMES = [
     complexity: 2,
     description:
       "Piochez des carreaux colorés et optimisez votre plateau. Simple, beau, redoutablement tactique.",
+    buyUrl: "https://www.philibertnet.com/fr/next-move/54391-azul-826956620105.html",
   },
   {
     id: "7-wonders-duel",
@@ -118,6 +126,8 @@ export const GAMES = [
     complexity: 3,
     description:
       "Toute la richesse de 7 Wonders concentrée en un face-à-face tendu et malin.",
+    buyUrl:
+      "https://www.philibertnet.com/fr/repos-productions/36626-7-wonders-duel-5425016923801.html",
   },
   {
     id: "sky-team",
@@ -131,6 +141,7 @@ export const GAMES = [
     complexity: 2,
     description:
       "Pilote et copilote coordonnent leurs dés en silence pour poser l'appareil en douceur.",
+    buyUrl: "https://www.philibertnet.com/fr/le-scorpion-masque/122587-sky-team-807658001270.html",
   },
   {
     id: "splendor",
@@ -144,6 +155,7 @@ export const GAMES = [
     complexity: 2,
     description:
       "Accumulez des ressources pour développer votre commerce de pierres précieuses.",
+    buyUrl: "https://www.philibertnet.com/fr/space-cowboys/27933-splendor-3558380020974.html",
   },
   {
     id: "just-one",
@@ -157,6 +169,7 @@ export const GAMES = [
     complexity: 1,
     description:
       "Faites deviner un mot à un coéquipier avec un seul indice chacun. Rires garantis.",
+    buyUrl: "https://www.philibertnet.com/fr/repos-productions/68512-just-one-5425016922569.html",
   },
   {
     id: "skull",
@@ -170,6 +183,7 @@ export const GAMES = [
     complexity: 1,
     description:
       "Misez, bluffez, retournez vos cartes. Un classique du bluff redoutablement tendu.",
+    buyUrl: "https://www.philibertnet.com/fr/space-cowboys/25868-skull-silver-3558380108320.html",
   },
   {
     id: "dixit",
@@ -183,6 +197,7 @@ export const GAMES = [
     complexity: 1,
     description:
       "Des illustrations oniriques et une pincée de poésie pour un jeu tout en subtilité.",
+    buyUrl: "https://www.philibertnet.com/fr/libellud/9145-dixit-9782370990822.html",
   },
   {
     id: "wavelength",
@@ -196,6 +211,8 @@ export const GAMES = [
     complexity: 1,
     description:
       "Alignez vos intuitions sur celles du groupe. Idéal pour une grande tablée animée.",
+    buyUrl:
+      "https://www.philibertnet.com/fr/asmodee/152907-longueur-d-onde-wavelength-3558380081401.html",
   },
   {
     id: "wingspan",
@@ -209,6 +226,7 @@ export const GAMES = [
     complexity: 3,
     description:
       "Construisez des chaînes d'actions élégantes autour d'une magnifique collection d'oiseaux.",
+    buyUrl: "https://www.philibertnet.com/fr/matagot/73168-wingspan-3760146644991.html",
   },
 ];
 
