@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# self-contained single-file bundle generated for artifact/preview sharing
+gamenight-artifact.html
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
