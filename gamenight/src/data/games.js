@@ -1,5 +1,9 @@
 // Données fictives — prototype uniquement, aucune connexion à une vraie base de jeux.
 // Seul `buyUrl` pointe vers de vraies fiches produit (philibertnet.com) pour les liens d'achat.
+// `rules` (voir rules.js) est un résumé original écrit pour ce prototype, pas une
+// reproduction des règles officielles de l'éditeur.
+
+import { RULES } from "./rules";
 
 export const MOODS = [
   { id: "reflexion", label: "Réflexion", emoji: "🧠" },
@@ -1515,6 +1519,11 @@ export const GAMES = [
     buyUrl: "https://www.philibertnet.com/fr/intrafin/81908-barrage-5425037740319.html",
   },
 ];
+
+// Attache le résumé de règles à chaque jeu (voir rules.js)
+GAMES.forEach((game) => {
+  game.rules = RULES[game.id] ?? null;
+});
 
 export function gameById(id) {
   return GAMES.find((g) => g.id === id);

@@ -8,10 +8,12 @@ import Friends from "./components/Friends";
 import Library from "./components/Library";
 import FinalCTA from "./components/FinalCTA";
 import Footer from "./components/Footer";
+import GameDetailModal from "./components/GameDetailModal";
 import { DEFAULT_LIBRARY_IDS } from "./data/games";
 
 export default function App() {
   const [libraryIds, setLibraryIds] = useState(DEFAULT_LIBRARY_IDS);
+  const [rulesGame, setRulesGame] = useState(null);
 
   const scrollToDemo = () => {
     document.querySelector("#decouvrir")?.scrollIntoView({ behavior: "smooth" });
@@ -33,17 +35,24 @@ export default function App() {
       <main>
         <Hero onFindGame={scrollToDemo} />
         <HowItWorks />
-        <DemoFinder libraryIds={libraryIds} />
-        <Profile />
+        <DemoFinder libraryIds={libraryIds} onShowRules={setRulesGame} />
+        <Profile onShowRules={setRulesGame} />
         <Friends />
         <Library
           libraryIds={libraryIds}
           onToggleGame={toggleLibraryGame}
           onAddGames={addLibraryGames}
+          onShowRules={setRulesGame}
         />
         <FinalCTA />
       </main>
       <Footer />
+
+      <GameDetailModal
+        game={rulesGame}
+        owned={rulesGame ? libraryIds.includes(rulesGame.id) : false}
+        onClose={() => setRulesGame(null)}
+      />
     </div>
   );
 }

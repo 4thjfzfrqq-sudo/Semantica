@@ -18,7 +18,7 @@ function Pill({ active, onClick, children }) {
   );
 }
 
-export default function DemoFinder({ libraryIds = [] }) {
+export default function DemoFinder({ libraryIds = [], onShowRules }) {
   const [players, setPlayers] = useState(null);
   const [duration, setDuration] = useState(null);
   const [moods, setMoods] = useState([]);
@@ -211,16 +211,26 @@ export default function DemoFinder({ libraryIds = [] }) {
                       <p className="mt-4 rounded-2xl bg-ink/40 p-4 text-sm leading-relaxed text-cream-dim italic">
                         « {result.explanation} »
                       </p>
-                      {!libraryIds.includes(result.top.game.id) && result.top.game.buyUrl && (
-                        <a
-                          href={result.top.game.buyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-cream px-4 py-2 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
-                        >
-                          🛒 Acheter {result.top.game.name} ↗
-                        </a>
-                      )}
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {!libraryIds.includes(result.top.game.id) && result.top.game.buyUrl && (
+                          <a
+                            href={result.top.game.buyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-cream px-4 py-2 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
+                          >
+                            🛒 Acheter {result.top.game.name} ↗
+                          </a>
+                        )}
+                        {onShowRules && (
+                          <button
+                            onClick={() => onShowRules(result.top.game)}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm font-semibold text-cream-dim transition-colors hover:bg-ink-soft hover:text-cream"
+                          >
+                            ℹ️ Comment on joue
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -233,7 +243,11 @@ export default function DemoFinder({ libraryIds = [] }) {
                         return (
                           <div
                             key={alt.game.id}
-                            className="flex items-center gap-3 rounded-2xl border border-line bg-ink/30 p-3 transition-colors hover:border-white/15"
+                            role={onShowRules ? "button" : undefined}
+                            tabIndex={onShowRules ? 0 : undefined}
+                            onClick={onShowRules ? () => onShowRules(alt.game) : undefined}
+                            title={onShowRules ? `Comment on joue à ${alt.game.name}` : undefined}
+                            className={`flex items-center gap-3 rounded-2xl border border-line bg-ink/30 p-3 transition-colors hover:border-white/15 ${onShowRules ? "cursor-pointer" : ""}`}
                           >
                             <CoverArt game={alt.game} size="sm" className="h-14 w-14 shrink-0" />
                             <div className="min-w-0 flex-1">
@@ -248,6 +262,7 @@ export default function DemoFinder({ libraryIds = [] }) {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 title={`Acheter ${alt.game.name}`}
+                                onClick={(e) => e.stopPropagation()}
                                 className="shrink-0 text-lg transition-transform hover:scale-110"
                               >
                                 🛒

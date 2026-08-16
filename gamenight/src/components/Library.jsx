@@ -4,7 +4,7 @@ import { GAMES } from "../data/games";
 import GameCard from "./GameCard";
 import ScanModal from "./ScanModal";
 
-export default function Library({ libraryIds, onToggleGame, onAddGames }) {
+export default function Library({ libraryIds, onToggleGame, onAddGames, onShowRules }) {
   const [scanOpen, setScanOpen] = useState(false);
 
   return (
@@ -26,7 +26,8 @@ export default function Library({ libraryIds, onToggleGame, onAddGames }) {
             <p className="mt-3 max-w-md text-cream-dim">
               <strong className="text-cream">{libraryIds.length} jeu{libraryIds.length > 1 ? "x" : ""}</strong>{" "}
               dans votre ludothèque — ce sont eux que « On joue à quoi ? » utilise pour
-              vous recommander une partie. Cliquez sur un jeu pour l'ajouter ou le retirer.
+              vous recommander une partie. Cliquez sur un jeu pour l'ajouter ou le
+              retirer, ou sur le ℹ️ pour voir comment il se joue.
             </p>
           </motion.div>
 
@@ -57,6 +58,7 @@ export default function Library({ libraryIds, onToggleGame, onAddGames }) {
                 showBuyLink
                 selected={libraryIds.includes(game.id)}
                 onToggle={onToggleGame}
+                onShowRules={onShowRules}
               />
             </motion.div>
           ))}

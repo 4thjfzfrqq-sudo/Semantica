@@ -18,6 +18,7 @@ export default function GameCard({
   selected = false,
   onToggle,
   showBuyLink = false,
+  onShowRules,
 }) {
   const toggle = () => onToggle?.(game.id);
 
@@ -59,6 +60,18 @@ export default function GameCard({
           <span className="absolute top-2.5 right-2.5 rounded-full bg-ink/80 px-2.5 py-1 text-xs font-semibold text-cream backdrop-blur">
             {badge}
           </span>
+        )}
+        {onShowRules && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onShowRules(game);
+            }}
+            aria-label={`Règles de ${game.name}`}
+            className="absolute top-2.5 left-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-ink/70 text-sm text-cream-dim backdrop-blur transition-colors hover:bg-ink hover:text-cream"
+          >
+            ℹ️
+          </button>
         )}
         {selectable && (
           <span

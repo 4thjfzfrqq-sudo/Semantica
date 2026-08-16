@@ -12,7 +12,7 @@ const STATS = [
 
 const FAVORITE_IDS = ["cascadia", "the-crew", "azul", "7-wonders-duel"];
 
-export default function Profile() {
+export default function Profile({ onShowRules }) {
   const favorites = GAMES.filter((g) => FAVORITE_IDS.includes(g.id));
 
   return (
@@ -79,7 +79,7 @@ export default function Profile() {
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                 >
-                  <GameCard game={game} badge="❤️ Aimé" />
+                  <GameCard game={game} badge="❤️ Aimé" onShowRules={onShowRules} />
                 </motion.div>
               ))}
             </div>
