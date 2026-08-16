@@ -37,7 +37,7 @@ export default function App() {
         <HowItWorks />
         <DemoFinder libraryIds={libraryIds} onShowRules={setRulesGame} />
         <Profile onShowRules={setRulesGame} />
-        <Friends />
+        <Friends libraryIds={libraryIds} onShowRules={setRulesGame} />
         <Library
           libraryIds={libraryIds}
           onToggleGame={toggleLibraryGame}
